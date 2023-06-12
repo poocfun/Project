@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('image');
             $table->string('judul');
+            $table->string('jenis_pekerjaan');
+            $table->string('kebutuhan');
+            $table->string('nama_pt');
             $table->string('start_gaji');
             $table->string('last_gaji');
             $table->string('usia');

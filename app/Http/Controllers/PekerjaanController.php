@@ -5,22 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pekerjaan;
 use App\Models\Requirement;
-
+use App\Models\Benefit;
 class PekerjaanController extends Controller
 {
     public function index()
     {
-        $pekerjaan = Pekerjaan::with('requirement')->get();
+        $pekerjaan = Pekerjaan::with(['requirement', 'benefit'])->get();
         $data = array(
             'pekerjaan' => $pekerjaan,
         );
         return view('pekerjaan.index', $data);
     }
+    
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'judul' => 'required|string|max:100',
+            'nama_pt' => 'required|string|max:100',
+            'jenis_pekerjaan' => 'required|string|max:100',
+            'kebutuhan' => 'required|string|max:100',
             'start_gaji' => 'required',
             'last_gaji' => 'required',
             'deskripsi' => 'nullable',
@@ -33,6 +37,9 @@ class PekerjaanController extends Controller
 
         $pekerjaan = new Pekerjaan;
         $pekerjaan->judul = $validatedData['judul'];
+        $pekerjaan->nama_pt = $validatedData['nama_pt'];
+        $pekerjaan->jenis_pekerjaan = $validatedData['jenis_pekerjaan'];
+        $pekerjaan->kebutuhan = $validatedData['kebutuhan'];
         $pekerjaan->start_gaji = $validatedData['start_gaji'];
         $pekerjaan->last_gaji = $validatedData['last_gaji'];
         $pekerjaan->deskripsi = $validatedData['deskripsi'];
@@ -62,13 +69,25 @@ class PekerjaanController extends Controller
             }
         }
 
+        if (!empty($request->input('benefit'))) {
+            $pekerjaanBenefit = $request->input('benefit');
+            $benefitCount = count($pekerjaanBenefit);
+
+            for ($i = 0; $i < $benefitCount; $i++) {
+                $benefit = new Benefit;
+                $benefit->benefit = $pekerjaanBenefit[$i];
+                $benefit->pekerjaan_id = $pekerjaan->id;
+                $benefit->save();
+            }
+        }
+
         return redirect()->back()->with('success', 'Data pekerjaan berhasil ditambah');
 
     }
 
     public function show($id)
     {
-        $pekerjaan = Pekerjaan::with('requirement')->findOrFail($id);
+        $pekerjaan = Pekerjaan::with(['requirement', 'benefit'])->findOrFail($id);
 
         $data = [
             'pekerjaan' => $pekerjaan
