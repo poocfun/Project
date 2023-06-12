@@ -13,4 +13,8 @@ class Pekerjaan extends Model
     {
         return $this->hasMany(Requirement::class, 'pekerjaan_id', 'id');
     }
+    public function benefit()
+    {
+        return $this->hasMany(Benefit::class, 'pekerjaan_id', 'id');
+    }
 }

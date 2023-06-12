@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LamarController;
 use App\Http\Controllers\PekerjaanController;
-
+use App\Http\Controllers\JenispekerjaanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,8 @@ Route::controller(PekerjaanController::class)->group(function () {
     Route::post('/monitor', 'store')->name('post-pekerjaan');
     Route::get('/monitor/info/{id}', 'show');
 });
+
+Route::post('/monitor-info/{id}', [LamarController::class, 'store']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,3 +60,15 @@ Route::get('/chat', [AdminController::class, 'pesan']);
 Route::get('/lamaran', [AdminController::class, 'lamar']);
 
 Route::get('/selengkapnya', [AdminController::class, 'info']);
+
+Route::get('/administrator', [JenispekerjaanController::class, 'admin']);
+
+Route::get('/pekerjaan', [JenispekerjaanController::class, 'index']);
+Route::get('/pekerjaan/show/{id}', [JenispekerjaanController::class, 'show'])->name('pekerjaan.show');
+Route::get('/pekerjaan/edit/{id}', [JenispekerjaanController::class, 'edit'])->name('pekerjaan.edit');
+Route::delete('/pekerjaan/delete/{id}', [JenispekerjaanController::class, 'destroy'])->name('pekerjaan.destroy');
+Route::put('/update-pekerjaan/{id}', [JenispekerjaanController::class, 'update']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

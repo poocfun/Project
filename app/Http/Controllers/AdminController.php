@@ -25,4 +25,8 @@ class AdminController extends Controller
     {
         return view('pekerjaan.info');
     }
+
+    
+
+
 }

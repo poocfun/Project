@@ -131,16 +131,10 @@
       </div>
     </div>
   </div>
-
-
-
-
   <div class="col-12">
     <h3 style="font-weight: bold;">Lowongan Pekerjaan Tersedia
         <span>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left:599px;">
-            Tambah
-            </button>
+
         </span>
     </h3>
     @foreach ($pekerjaan as $row)
@@ -150,12 +144,12 @@
                 <div style="background-color: #E0E0E0;" class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="{{asset('storage/pekerjaan/'.$row->image)}}" class="img-fluit"  alt="">
+                            <img src="{{asset('storage/pekerjaan/'.$row->image)}}" class="img-fluid"  alt="">
                         </div>
                         <div class="col-md-8">
                             <h2 class="text-bold">{{$row->judul}}</h2>
                             <p class="text-bold" style="color: #00000080">
-                                {{ $row->created_at->diffForHumans() }} 0 Pelamar - Rp.{{ $row->start_gaji }} - Rp.{{ $row->last_gaji }}
+                                {{ $row->created_at->diffForHumans() }} - {{ $row->kebutuhan }} Pelamar - Rp.{{ number_format($row->start_gaji, 0, ',', '.') }} - Rp.{{ number_format($row->last_gaji, 0, ',', '.') }}
                             </p>
                             <p class="text-bold" style="color: #00000080">{{$row->deskripsi}} </p>
                             <p class="mb-0 text-bold" ><i class="fa fa-star 2x" aria-hidden="true" style="color: yellow;"></i>
@@ -167,7 +161,7 @@
                             <div class="row">
                                 @foreach ($row->requirement as $item)
                                 <div class="ml-2">
-                                    <button style="width: 200px; border-radius:15px; color:#282828;" type="button" class="btn btn-block btn-secondary px-3 py-2 text-bold">{{$item->kualifikasi}}</button>
+                                    <button style="width: 200px; border-radius:15px; color:#282828;" type="button" class="btn btn-block btn-secondary px-3 py-2 mt-2 text-bold">{{$item->kualifikasi}}</button>
                                   </div>
                                 @endforeach
 
@@ -188,119 +182,4 @@
 </div>
 
   @endSection()
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <form enctype="multipart/form-data" method="post" action="{{route('post-pekerjaan')}}">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <Label>Judul</Label><span class="text-danger">*</span>
-                                <input type="text" class="form-control" name="judul" required autofocus>
-                                @error('judul')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <Label>Deskripsi</Label>
-                                <textarea name="deskripsi" class="form-control" cols="30" rows="4"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="salary">Gaji Awal</label>
-                                        <input type="number" class="form-control" id="salary" name="start_gaji" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="salary">Gaji Maksimal</label>
-                                        <input type="number" class="form-control" id="salary" name="last_gaji" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="salary">Pendidikan</label>
-                                <input type="text" class="form-control" id="text" name="pendidikan" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="salary">Jenis Kelamin</label>
-                                <input type="text" class="form-control" id="text" name="jeniskelamin" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="salary">Usia</label>
-                                <input type="number" class="form-control" id="salary" name="usia" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="location">Lokasi</label>
-                                <input type="text" class="form-control" id="location" name="lokasi" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputFile">Attachment</label><span
-                                    class="text-danger">*optional</span>
-                                <br><span class="text-danger">Image,
-                                    Pdf, Docx</span>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" name="image" class="custom-file-input"
-                                            id="exampleInputFile" multiple
-                                            onchange="document.getElementById('file-label').innerHTML = this.value.split('\\').pop()">
-                                        <label class="custom-file-label" id="file-label">Choose file</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="text-center">-- Requirement  --</p>
-                            <div id="sub-materi-container">
-
-                            </div>
-                        </div>
-                        <div class="float-left">
-                            <button id="tambah-sub-materi" type="button" class="btn btn-primary">Tambah Requirement</button>
-                        </div>
-
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-
-            </div>
-            </div>
-
-        </form>
-        </div>
-    </div>
-</div>
-  <script>
-    // Ambil elemen tombol "Tambah Sub Materi" dan kontainer form sub materi
-    const tambahSubMateriBtn = document.getElementById('tambah-sub-materi');
-    const subMateriContainer = document.getElementById('sub-materi-container');
-    tambahSubMateriBtn.addEventListener('click', function() {
-        const subMateriDiv = document.createElement('div');
-        subMateriDiv.innerHTML = `
-            <div class="mb-3">
-                <label for="">Kualifikasi</label>
-                <input class="form-control" type="text" name="kualifikasi[]" autofocus>
-            </div>
-            <div class="mb-3">
-                <label for="">Deskripsi</label>
-                <textarea name="deskripsi_kualifikasi[]" class="form-control" id="" cols="30" rows="4"></textarea>
-            </div>
-        `;
-        // Tambahkan elemen div baru ke dalam kontainer form sub materi
-        subMateriContainer.appendChild(subMateriDiv);
-    });
-</script>
+   

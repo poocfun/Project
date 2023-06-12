@@ -161,16 +161,15 @@
                     </center><br>
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="{{asset('storage/pekerjaan/'.$pekerjaan->image)}}" class="img-fluit" alt="">
+                            <img src="{{asset('storage/pekerjaan/'.$pekerjaan->image)}}" class="img-fluid" alt="">
                         </div>
                         <div class="col-md-4">
                             <h2 class="text-bold">{{$pekerjaan->judul}}</h2>
-                            <p class="text-bold mb-1" style="color: #00000080">PT Pelangi Fortuna Global</p>
+                            <p class="text-bold mb-1" style="color: #00000080">{{$pekerjaan->nama_pt}}</p>
                             <p class="text-bold mt-0" style="color: #00000080">{{$pekerjaan->lokasi}}</p>
-                            <p class=""><i class="fa fa-shopping-bag" aria-hidden="true"></i> Penuh Waktu, On site
-                            </p>
-                            <p><i class="fas fa-money-check-alt"></i>Rp.{{$pekerjaan->start_gaji}}- Rp.{{$pekerjaan->last_gaji}}</p>
-                            <p style="color: #3BB800;">Dibutuhkan segera - 3 orang</p>
+                            <p class=""><i class="fa fa-shopping-bag" aria-hidden="true"></i> {{$pekerjaan->jenis_pekerjaan}}</p>
+                            <p><i class="fas fa-money-check-alt"></i> Rp.{{ number_format($pekerjaan->start_gaji, 0, ',', '.') }} - Rp.{{ number_format($pekerjaan->last_gaji, 0, ',', '.') }}</p>
+                            <p style="color: #3BB800;">Dibutuhkan segera - {{ $pekerjaan->kebutuhan }} orang</p>
                             <div>
                                 <h3>Persyaratan Minimum</h3>
                                 <dl class="row">
@@ -185,9 +184,6 @@
 
                                     <dt class="col-md-4">Lokasi</dt>
                                     <dd class="col-md-6">{{$pekerjaan->lokasi}}</dd>
-
-                                    <dt class="col-md-4">Pengalaman</dt>
-                                    <dd class="col-md-6">Pengalaman Kerja dibutuhkan</dd>
                                 </dl>
                             </div>
                         </div>
@@ -205,10 +201,11 @@
                             </ul>
                             <p class="text-bold">Benefit :</p>
                             <ul>
-                                <li>Upah bekerja</li>
-                                <li>Sertifikat Internship</li>
-                                <li>Peluang menjadi karyawan</li>
-                                <li>Waktu kerja Senin-Jumat</li>
+                                @foreach ($pekerjaan->benefit as $item)
+                                <li>{{$item->benefit}}</li>
+                                @endforeach
+
+
                             </ul><br>
 
                             {{-- <div class="col-md-12">
@@ -216,7 +213,7 @@
                           </div>  --}}
                             <!-- Button trigger modal -->
                             <button style="width: 330px; border-radius:15px;" type="button" class="btn btn-primary"
-                                data-toggle="modal" data-target="#exampleModal">
+                                data-toggle="modal" data-target="#exampleModal{{$pekerjaan->id}}">
                                 Lamar Sekarang
                             </button>
 
@@ -229,7 +226,7 @@
         </div>
     @endSection()
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="exampleModal{{$pekerjaan->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -261,36 +258,43 @@
                         </div>
                     </div>
 
-                    <div class="card border rounded shadow">
-                        <div class="card-body">
+                    <form action="{{ url('monitor-info/'.$pekerjaan->id)}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <input type="hidden" name="pekerjan_id" value="{{$pekerjaan->id}}">
+                            <div class="col-md-12">
+                                <div class="mb-3" style="border-radius:10px;">
+                                    <Label>Pengalaman Kerja</Label>
+                                    <textarea name="pengalaman" class="form-control" cols="50" rows="3" placeholder="Belum ada pengalaman Kerja"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="salary">Pendidikan</label>
+                                    <input type="text" class="form-control" id="text" name="pendidikan" required placeholder="Asal SMA/SMK Mana???" >
+                                </div>
+                                <div class="form-group mt-4">
+                                    <label for="exampleInputFile" class="mb-0">Dokumen dan Sertifikat</label><span
+                                        class="text-danger">*optional</span>
+                                    <br><span class="text-danger mt-0">Image,
+                                        Pdf, Docx</span>
+                                    <div class="input-group mt-1">
+                                        <div class="custom-file">
+                                            <input type="file" name="dokumen" class="custom-file-input"
+                                                id="exampleInputFile" multiple
+                                                onchange="document.getElementById('file-label').innerHTML = this.value.split('\\').pop()">
+                                            <label class="custom-file-label" id="file-label">+ Tambah Dokumen & Sertifikat</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <button style="width: 465px; border-radius:10px;" type="submit"
+                                    class="btn btn-primary">Lanjut Lamar</button>
+                            </div>
+                        </div>
+                    </form>
 
-                            <h4 class="text-bold ">Pengalaman Kerja<span><a class="" href=""
-                                        style="margin-left:172px; font-weight:bold; font-size: 17px;">Tambah</a></span>
-                            </h4>
-                            <p class="mt-4" style="color:black; font-family:inter;">Belum ada pengalaman Kerja</p>
-                        </div>
-                    </div>
-                    <div class="card border rounded shadow">
-                        <div class="card-body">
-                            <h4 class="text-bold">Pendidikan<span><a class="" href=""
-                                        style="margin-left:243px; font-weight:bold; font-size: 17px;">Tambah</a></span>
-                            </h4>
-                            <p class="mt-4 ml-5" style="font-family:inter;"><i
-                                    class="fas fa-user-graduate fa-lg"></i> Asal SMA/SMK Mana???</p>
-                        </div>
-                    </div>
-                    <div class="card border rounded shadow">
-                        <div class="card-body">
-                            <h4 class="text-bold">Dokumen dan Sertifikat</h4>
-                            <p class="text-center mt-4" style="color:grey;">+ Tambah Dokumen & Sertifikat</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-md-12">
-                        <button style="width: 465px; border-radius:10px;" type="button"
-                            class="btn btn-primary">Lanjut Lamar</button>
-                    </div>
                 </div>
             </div>
         </div>
