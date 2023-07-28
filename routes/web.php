@@ -24,14 +24,21 @@ Route::controller(PekerjaanController::class)->group(function () {
     Route::get('/monitor/info/{id}', 'show');
 });
 
+
+
+Route::get('/chat', [AdminController::class, 'pesan']);
+
+Route::get('/lamaran', [AdminController::class, 'lamar']);
+
+Route::get('/selengkapnya', [AdminController::class, 'info']);
+
 Route::post('/monitor-info/{id}', [LamarController::class, 'store']);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/home', function () {
+Route::get('/homee', function () {
     return view('welcome');
 });
 
@@ -47,19 +54,27 @@ Route::get('/layanan', function () {
     return view('lk');
 });
 
-Route::get('/login', function () {
-    return view('log');
-});
+
 
 Route::get('/registrasi', function () {
     return view('register');
 });
 
-Route::get('/chat', [AdminController::class, 'pesan']);
 
-Route::get('/lamaran', [AdminController::class, 'lamar']);
 
-Route::get('/selengkapnya', [AdminController::class, 'info']);
+Route::post('/register-user', [AuthController::class, 'register'])->name('register-user');
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/log-in', 'index');
+    Route::post('/log-in', 'login')->name('login-user');
+    Route::get('/logout', 'logout')->name('logout');
+});
+
+
+Route::get('auth/google',[App\Http\Controllers\GoogleController::class,'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback',[App\Http\Controllers\GoogleController::class,'handleGoogleCallback'])->name('google.callback');
+
+
 
 Route::get('/administrator', [JenispekerjaanController::class, 'admin']);
 
@@ -69,6 +84,24 @@ Route::get('/pekerjaan/edit/{id}', [JenispekerjaanController::class, 'edit'])->n
 Route::delete('/pekerjaan/delete/{id}', [JenispekerjaanController::class, 'destroy'])->name('pekerjaan.destroy');
 Route::put('/update-pekerjaan/{id}', [JenispekerjaanController::class, 'update']);
 
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/user', [JenispekerjaanController::class, 'user']);
+Route::get('edit_user/{id}', [JenispekerjaanController::class,'edit_user']);
+Route::get('hapus/{id}', [JenispekerjaanController::class, 'hapus']);
+Route::put('update_user/{id}', [JenispekerjaanController::class, 'update_user'])->name('update-user');
+Route::post('insert_user', [JenispekerjaanController::class,'insert_user']);
+
+
+Route::get('/populer', [JenispekerjaanController::class, 'populer']);
+Route::get('delete_populer/{id}', [JenispekerjaanController::class, 'delete_populer']);
+Route::post('/insertpopuler', [JenispekerjaanController::class, 'insert']);
+Route::get('update_populer/{id}', [JenispekerjaanController::class, 'update_populer']);
+Route::get('show_populer/{id}', [JenispekerjaanController::class, 'show_populer']);
+Route::put('/procces_update_populer/{id}', [JenispekerjaanController::class, 'procces_update_populer']);
+
+
+Route::get('/form', [JenispekerjaanController::class, 'formulir']);
+
+Route::get('/delete_form/{id}', [JenispekerjaanController::class, 'delete_form']);
+Route::get('/show_form/{id}', [JenispekerjaanController::class, 'show_form']);

@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <center>
-                        <button class="btn btn-block btn-outline-light" style="color: rgb(250, 250, 250); width: 180px;">Buat CV Sekarang -></button>
+                        <a href="{{ url('log-in') }}" class="btn btn-block btn-outline-light" style="color: rgb(250, 250, 250); width: 180px;">Buat CV Sekarang -></a>
                     </center>
                 </div>
         </div>
@@ -237,7 +237,7 @@
             </div>
             <center>
                 <div>
-                    <button style="width: 200px; font-weight: bold;" type="button" class="btn btn-block btn-outline-info">Buat CV sekarang -></button>
+                    <a href="{{ url('log-in') }}" style="width: 200px; font-weight: bold;" type="button" class="btn btn-block btn-outline-info">Buat CV sekarang -></a>
                 </div>
             </center>
         </div>
