@@ -198,10 +198,10 @@
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-2">
-                                            <a href="" class="btn btn-primary" style="font-weight: bold;">Login</a>
+                                            <a href="{{ url('log-in') }}" class="btn btn-primary" style="font-weight: bold;">Login</a>
                                         </div>
                                         <div class="col-md-2">
-                                            <a href="" class="btn btn-primary" style="font-weight: bold;">Daftar</a>
+                                            <a href="{{ url('registrasi') }}" class="btn btn-primary" style="font-weight: bold;">Daftar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -260,10 +260,10 @@
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-2">
-                                            <a href="" class="btn btn-primary" style="font-weight: bold;">Buat</a>
+                                            <a href="{{ url('log-in') }}" class="btn btn-primary" style="font-weight: bold;">Buat</a>
                                         </div>
                                         <div class="col-md-2">
-                                            <a href="" class="btn btn-primary" style="font-weight: bold;">Upload</a>
+                                            <a href="{{ url('log-in') }}" class="btn btn-primary" style="font-weight: bold;">Upload</a>
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +293,7 @@
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-5">
-                                            <a href="" class="btn btn-primary" style="font-weight: bold;">Lamar Pekerjaan ></a>
+                                            <a href="{{ url('log-in') }}" class="btn btn-primary" style="font-weight: bold;">Lamar Pekerjaan ></a>
                                         </div>
                                     </div>
                                 </div>
@@ -691,7 +691,7 @@
                 </div>
                 <div>
                     <center>
-                    <p style="font-weight: bold">Tidak menemukan pekerjaan yang Anda cari?<span style="color: #0064DA; text-decoration: underline;"><a href=""> Lihat Semua Loker  <i class="fa fa-arrow-right" aria-hidden="true"></i></a></span></p>
+                    <p style="font-weight: bold">Tidak menemukan pekerjaan yang Anda cari?<span style="color: #0064DA; text-decoration: underline;"><a href="{{ url('log-in') }}"> Lihat Semua Loker  <i class="fa fa-arrow-right" aria-hidden="true"></i></a></span></p>
                     </center>
                 </div>
             </div>
@@ -712,7 +712,7 @@
               <div class="col-md-2"></div>
                 <div class="col-lg-4" style="margin-top: 50px">
                     <p style="font-weight: bold; font-size: 25px;" class="text-white">Siapkan peringatan <br> pencarian kerja <br> yang dipersonalisasi</p>
-                    <button class="btn btn bg-white" style="color: #0064DA; font-weight: bold;">Sign Up ></button>
+                    <a href="{{ url('log-in') }}" class="btn btn bg-white" style="color: #0064DA; font-weight: bold;">Sign Up ></a>
                 </div>
 
                 <div class="col-lg-6 " >

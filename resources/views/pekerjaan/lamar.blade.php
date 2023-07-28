@@ -4,22 +4,23 @@
 @section('content')
 
 <div class="row">
-    <div class="col-9">
+    <div class="col-12">
         <div class="row">
             <div class="col-12">
               <!-- Custom Tabs -->
               <div class="card" style="border-radius:15px;">
                 <div class="card-header  p-0">
-                  <ul class="nav nav-pills p-2" style="margin-left: 260px">
+                  <ul class="nav nav-pills p-2" style="margin-left: 408px">
                     <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Proses Seleksi</a></li>
                     <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Hasil Seleksi</a></li>
                   </ul>
                 </div><!-- /.card-header -->
 
+
                 <div class="card-body">
                   <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
-                        <div class="row">
+                        <div class="row " style="margin-left: 190px">
                             <div class="ml-2">
                                 <td>
                                     <button style="width: 150px; border-radius:15px; font-size:15px;" type="button" class="btn btn-block btn-outline-primary text-bold">Semua</button>
@@ -40,7 +41,8 @@
                                     <button style="width: 180px; border-radius:15px; font-size:15px;" type="button" class="btn btn-block btn-outline-primary text-bold">Di Undang wawancara</button>
                                 </td>
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body" style="background-color: #E0E0E0; border-radius: 15px;">
                                 <p style="font-size:20px; color:#5C5C5C;" class="">
@@ -50,26 +52,28 @@
                             </div>
                         </div>
 
+                        @foreach ($pekerjaan as $row)
                         <div class="card">
                             <div class="card-body border rounded shadow">
                               <div class="accordion">
                                 <div class="accordion-item">
-                                  <div class="accordion-header">
-                                    <img src="https://pintarnya.com/kerja/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fpintarnya-kerja-assets%2Fimages%2Femployer%2FPT__Pelangi_Fortuna_Global_1671520207.png&w=256&q=75" style="height: 75px" alt="Image for Accordion Item 1">
-                                    <h3 style="color:#0064DA">UI Designer <span style="margin-left:362px;"> <i class="fas fa-arrow-down"></i></span></h3>
-
+                                  <div class="accordion-header col-md-4">
+                                    <img src={{asset('storage/pekerjaan/'.$row->image)}} class="img-fluid"  alt="Image for Accordion Item 1">
+                                    <h3 class="mt-4" style="color:#0064DA; margin-left: 30px;">{{$row->judul}} <span style="margin-left:600px;"> <i class="fas fa-arrow-down"></i></span></h3>
                                   </div>
+
                                   <div class="accordion-content ml-4">
-                                    <p><i class="fas fa-shield-check"></i>PT Pelangi Fortuna Global</p>
-                                    <p>Batu Aji, Kota Batam</p>
-                                    <p><i class="fa fa-graduation-cap" aria-hidden="true"></i> SMA/SMK/D3/D4/S1</p>
-                                    <p><i class="fa fa-shopping-bag" aria-hidden="true"></i> Penuh Waktu, On site</p>
-                                    <p><i class="fas fa-money-check-alt"></i> Rp. 3.800.000 - Rp. 4.000.000 </p>
+                                    <p><i class="fas fa-shield-check"></i>{{$row->nama_pt}}</p>
+                                    <p>{{$row->lokasi}}</p>
+                                    <p><i class="fa fa-graduation-cap" aria-hidden="true"></i>{{$row->pendidikan}}</p>
+                                    <p><i class="fa fa-shopping-bag" aria-hidden="true"></i>{{$row->jenis_pekerjaan}}</p>
+                                    <p><i class="fas fa-money-check-alt"></i>Rp.{{ number_format($row->start_gaji, 0, ',', '.') }} - Rp.{{ number_format($row->last_gaji, 0, ',', '.') }}</p>
                                   </div>
                                 </div>
                               </div>
                             </div>
                         </div>
+                        @endforeach
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_2">
@@ -89,29 +93,6 @@
               <!-- ./card -->
             </div>
             <!-- /.col -->
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="border rounded shadow">
-            <div class="p-4  ">
-              <div class="border-bottom d-flex">
-                <img src="" alt="" class="rounded-circle" style="width: 40px; height:40px;">
-                <div style="line-height: 10px; margin-left: 25px;">
-                  <p class="mb-1 text-bold" style="">Username</p>
-                  <p class="mt-3">Web Developer</p>
-                </div>
-              </div>
-              <div class="mt-3">
-                <ul style="font-family:inter; color:grey;  font-size:13px">
-                  <li class="mb-1">10 Project Dibuat</li>
-                  <li class="mt-1">10 Skill Yang Dimiliki</li>
-                </ul>
-              </div>
-              <div class="mt-2 d-flex justify-content-center ">
-                <button class="btn btn-secondary">Edit Profil</button>
-              </div>
-            </div>
           </div>
         </div>
 </div>

@@ -17,19 +17,17 @@ class LamarController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'pekerjaan_id' => 'required',
             'pengalaman' => 'nullable',
             'pendidikan' => 'nullable',
-            'dokumen' => 'nullable|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $lamar = new Lamar;
-        // $lamar->user_id = Auth::user()->id;
-        $lamar->user_id = '1';
-        $lamar->pekerjaan_id = $validatedData['pekerjaan_id'];
+         $lamar->user_id = Auth::user()->id;
+        // $lamar->user_id = '1';
+        $lamar->pekerjaan_id = $id;
         $lamar->pengalaman = $validatedData['pengalaman'];
         $lamar->pendidikan = $validatedData['pendidikan'];
         if ($request->hasFile('dokumen')) {

@@ -135,7 +135,7 @@
                     <p data-aos="fade-up" data-aos-delay="100" style="color:#fff; font-size: 13px;">Tanya Tentang Produk KerjaGan, atau <br> yang lainnya.
                          Perwakilan kami yang <br> sangat terlatih siap siaga. Bantuan siap.</p><br>
                     <hr>
-                    <button class="btn btn bg-secondary" style="font-weight: bold;">Kontak Kami ></button><span style="color: #fff">Or call +62 821 2314 0294</span>
+                    <a href="{{ url('log-in') }}" class="btn btn bg-secondary" style="font-weight: bold;">Kontak Kami ></a><span style="color: #fff">Or call +62 821 2314 0294</span>
                 </div>
                 <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
                     <img src="{{ asset('template')}}/assets/img/punya.jpeg" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300" style="height: 400px;">

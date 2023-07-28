@@ -6,17 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Pekerjaan;
 use App\Models\Requirement;
 use App\Models\Benefit;
+use App\Models\Populer;
 class PekerjaanController extends Controller
 {
     public function index()
     {
         $pekerjaan = Pekerjaan::with(['requirement', 'benefit'])->get();
+        $populer = Populer::get();
         $data = array(
             'pekerjaan' => $pekerjaan,
+            'populer' => $populer
         );
         return view('pekerjaan.index', $data);
     }
-    
+
+
 
     public function store(Request $request)
     {
@@ -88,9 +92,10 @@ class PekerjaanController extends Controller
     public function show($id)
     {
         $pekerjaan = Pekerjaan::with(['requirement', 'benefit'])->findOrFail($id);
-
+        $populer = Populer::get();
         $data = [
-            'pekerjaan' => $pekerjaan
+            'pekerjaan' => $pekerjaan,
+            'populer' => $populer
         ];
         return view('pekerjaan.info', $data);
     }

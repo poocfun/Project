@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Lowongan</h1>
+                    <h1 class="m-0">Populer</h1>
                 </div>
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -36,53 +36,35 @@
                             <thead class="bg-primary">
                                 <tr>
                                     <th class="align-middle">#</th>
-                                    <th class="align-middle">Judul</th>
-                                    <th class="align-middle">Jenis Pekerjaan</th>
-                                    <th class="align-middle">Kebutuhan</th>
                                     <th class="align-middle">Nama PT</th>
+                                    <th class="align-middle">Kebutuhan</th>
                                     <th class="align-middle">Deskripsi</th>
-                                    <th class="align-middle">Gaji Awal</th>
-                                    <th class="align-middle">Gaji Maksimal</th>
-                                    <th class="align-middle">Pendidikan</th>
-                                    <th class="align-middle">Jenis Kelamin</th>
-                                    <th class="align-middle">Usia</th>
                                     <th class="align-middle">Lokasi</th>
                                     <th class="align-middle">Image</th>
                                     <th class="align-middle">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if ($pekerjaan->count() > 0)
-                                    @foreach ($pekerjaan as $row)
+                            @if (count($data))
+                                <tbody>
+                                    @foreach ($data as $item)
                                         <tr>
                                             <td class="align-middle">{{ $loop->iteration }}</td>
-                                            <td class="align-middle">{{ $row->judul }}</td>
-                                            <td class="align-middle">{{ $row->jenis_pekerjaan }}</td>
-                                            <td class="align-middle">{{ $row->kebutuhan }}</td>
-                                            <td class="align-middle">{{ $row->nama_pt }}</td>
-                                            <td class="align-middle">{{ substr($row->deskripsi, 0, 100) . '...' }}</td>
-                                            <td class="align-middle">{{ number_format($row->start_gaji, 0, ',', '.') }}</td>
-                                            <td class="align-middle">{{ number_format($row->last_gaji, 0, ',', '.') }}</td>
-                                            <td class="align-middle">{{ $row->pendidikan }}</td>
-                                            <td class="align-middle">{{ $row->jeniskelamin }}</td>
-                                            <td class="align-middle">{{ $row->usia }}</td>
-                                            <td class="align-middle">{{ $row->lokasi }}</td>
+                                            <td class="align-middle">{{ $item->namapt }}</td>
+                                            <td class="align-middle">{{ $item->kebutuhan }}</td>
+                                            <td class="align-middle">{{ $item->deskripsi }}</td>
+                                            <td class="align-middle">{{ $item->lokasi }}</td>
                                             <td class="align-middle">
-                                                <img src="{{ asset('storage/pekerjaan/' . $row->image) }}" alt="Image"
-                                                    class="img-thumbnail">
+                                                <img src="{{ asset('storage/pekerjaan/' . $item->image) }}" alt="Image"
+                                                    width="100px">
                                             </td>
                                             <td class="align-middle">
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('pekerjaan.show', ['id' => $row->id]) }}"
+                                                    <a href="show_populer/{{ $item->id }}"
                                                         class="btn btn-secondary">Detail</a>
-                                                    <a href="{{ route('pekerjaan.edit', ['id' => $row->id]) }}"
+                                                    <a href="update_populer/{{ $item->id }}"
                                                         class="btn btn-warning">Edit</a>
-                                                    <form action="{{ route('pekerjaan.destroy', ['id' => $row->id]) }}"
-                                                        method="POST" class="m-0" onsubmit="return confirm('Delete?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
+                                                    <a href="delete_populer/{{ $item->id }}"
+                                                        class="btn btn-danger">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -91,15 +73,14 @@
                                     <tr>
                                         <td class="text-center" colspan="14">Data Not Found</td>
                                     </tr>
-                                @endif
-                            </tbody>
+                                </tbody>
+                            @endif
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 @endsection
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -107,27 +88,20 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Lowongan Pekerjaan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Populer</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form enctype="multipart/form-data" method="post" action="{{ route('post-pekerjaan') }}">
+                <form enctype="multipart/form-data" method="post" action="insertpopuler/">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <Label>Judul</Label><span class="text-danger">*</span>
-                                <input type="text" class="form-control" name="judul" required autofocus>
-                                @error('judul')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <Label>jenis pekerjaan</Label><span class="text-danger">*</span>
-                                <input type="text" class="form-control" name="jenis_pekerjaan" required autofocus>
-                                @error('jenis_pekerjaan')
+                                <Label>Nama PT</Label><span class="text-danger">*</span>
+                                <input type="text" class="form-control" name="namapt" required autofocus>
+                                @error('namapt')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -139,59 +113,8 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <Label>Nama PT</Label><span class="text-danger">*</span>
-                                <input type="text" class="form-control" name="nama_pt" required autofocus>
-                                @error('nama_pt')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
                                 <Label>Deskripsi</Label>
                                 <textarea name="deskripsi" class="form-control" cols="30" rows="4"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="salary">Gaji Awal</label>
-                                        <input type="number" class="form-control" id="salary" name="start_gaji"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="salary">Gaji Maksimal</label>
-                                        <input type="number" class="form-control" id="salary" name="last_gaji"
-                                            required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="salary">Pendidikan</label>
-                                <input type="text" class="form-control" id="text" name="pendidikan"
-                                    required>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="float-left">
-                                        <button id="tambah-benefit" type="button" class="btn btn-primary">Tambah
-                                            Benefit</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="text-center">-- Benefit --</p>
-                                    <div id="benefit-container">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="salary">Jenis Kelamin</label>
-                                <input type="text" class="form-control" id="text" name="jeniskelamin"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <label for="salary">Usia</label>
-                                <input type="number" class="form-control" id="salary" name="usia" required>
                             </div>
                             <div class="form-group">
                                 <label for="location">Lokasi</label>
@@ -211,14 +134,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="text-center">-- Requirement --</p>
-                            <div id="sub-materi-container"> </div>
-                        </div>
-                        <div class="float-left">
-                            <button id="tambah-sub-materi" type="button" class="btn btn-primary">Tambah
-                                Requirement</button>
                         </div>
                     </div>
             </div>

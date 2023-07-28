@@ -9,10 +9,10 @@ class Lamar extends Model
 {
     use HasFactory;
 
-    protected  $fillable = [ 'pengalaman', 'pendidikan', 'dokumen'];
+    protected  $fillable = [ 'pengalaman', 'pendidikan', 'dokumen', 'lamar_id', 'user_id'];
 
     public function lamar()
     {
-        return $this->hasMany(Lamar::class, 'lamar_id', 'id');
+        return $this->hasMany(Lamar::class, 'lamar_id', 'user_id');
     }
 }

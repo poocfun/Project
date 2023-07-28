@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -18,7 +19,11 @@ class AdminController extends Controller
 
     public function lamar()
     {
-        return view('pekerjaan.lamar');
+        $pekerjaan = Pekerjaan::with(['requirement', 'benefit'])->get();
+        $data = array(
+            'pekerjaan' => $pekerjaan,
+        );
+        return view('pekerjaan.lamar',$data);
     }
 
     public function info()
@@ -26,7 +31,7 @@ class AdminController extends Controller
         return view('pekerjaan.info');
     }
 
-    
+
 
 
 }
